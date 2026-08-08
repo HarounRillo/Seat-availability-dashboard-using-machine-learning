@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Seat Monitor</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+                <p class="eyebrow">SMART SPACE MONITORING</p>
+
+                <h1>Seat Availability</h1>
+
+                <p class="subtitle">
+                    Real-time occupancy monitoring
+                </p>
+            </div>
+
+            <div class="connection">
+                <span id="connectionDot" class="connection-dot"></span>
+
+                <span id="connectionText">
+                    Connecting...
+                </span>
+            </div>
+
+        </header>
+
+
+        <!-- MAIN CARD -->
+
+        <main>
+
+            <section class="seat-card">
+
+                <div class="seat-header">
+
+                    <div>
+                        <span class="seat-label">
+                            SEAT
+                        </span>
+
+                        <h2>Seat 01</h2>
+                    </div>
+
+                    <div class="live-badge">
+                        <span></span>
+                        LIVE
+                    </div>
+
+                </div>
+
+
+                <!-- VISUAL SEAT -->
+
+                <div class="seat-visual">
+
+                    <div class="seat-back"></div>
+
+                    <div class="seat-cushion">
+
+                        <div class="seat-icon">
+                            🪑
+                        </div>
+
+                    </div>
+
+                    <div class="seat-leg left"></div>
+                    <div class="seat-leg right"></div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="status-section">
+
+                    <p class="status-title">
+                        CURRENT STATUS
+                    </p>
+
+                    <div id="Seat1" class="status loading">
+                        Loading...
+                    </div>
+
+                    <p id="lastUpdated" class="updated">
+                        Waiting for detector...
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- INFO CARDS -->
+
+            <section class="info-grid">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        ●
+                    </div>
+
+                    <div>
+                        <p>MONITORING</p>
+                        <strong>1 Seat</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        ↻
+                    </div>
+
+                    <div>
+                        <p>UPDATE MODE</p>
+                        <strong>Real-time</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        AI
+                    </div>
+
+                    <div>
+                        <p>DETECTION</p>
+                        <strong>Computer Vision</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <span>
+                Smart Seat Monitor
+            </span>
+
+            <span>
+                Firebase • YOLO
+            </span>
+
+        </footer>
+
+    </div>
+
+
+    <!-- =====================================================
+         FIREBASE
+         ===================================================== -->
+
+    <script type="module">
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+        import {
+            getDatabase,
+            ref,
+            onValue,
+            onDisconnect
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+        // =================================================
+        // FIREBASE CONFIG
+        // =================================================
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyARbCPpbFI7CbHJx9igFSEayD4jZorVDSc",
+
+            authDomain: "seat-18d45.firebaseapp.com",
+
+            databaseURL:
+                "https://seat-18d45-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+            projectId: "seat-18d45",
+
+            storageBucket: "seat-18d45.firebasestorage.app",
+
+            messagingSenderId: "46321544616",
+
+            appId: "1:46321544616:web:1dc6cd7a74b39bef3c419d"
+
+        };
+
+
+        // =================================================
+        // INITIALIZE FIREBASE
+        // =================================================
+
+        const app = initializeApp(firebaseConfig);
+
+        const database = getDatabase(app);
+
+
+        // =================================================
+        // DATABASE REFERENCE
+        // =================================================
+
+        const seatRef = ref(
+            database,
+            "Seats/Seat1"
+        );
+
+
+        // =================================================
+        // HTML ELEMENTS
+        // =================================================
+
+        const statusElement =
+            document.getElementById("Seat1");
+
+        const connectionDot =
+            document.getElementById("connectionDot");
+
+        const connectionText =
+            document.getElementById("connectionText");
+
+        const lastUpdated =
+            document.getElementById("lastUpdated");
+
+
+        // =================================================
+        // FIREBASE CONNECTION STATUS
+        // =================================================
+
+        const connectionRef =
+            ref(database, ".info/connected");
+
+
+        onValue(
+            connectionRef,
+            (snapshot) => {
+
+                const connected =
+                    snapshot.val() === true;
+
+                if (connected) {
+
+                    connectionDot.classList.add("online");
+
+                    connectionText.textContent =
+                        "Connected";
+
+                } else {
+
+                    connectionDot.classList.remove("online");
+
+                    connectionText.textContent =
+                        "Disconnected";
+                }
+
+            }
+        );
+
+
+        // =================================================
+        // LISTEN TO SEAT
+        // =================================================
+
+        onValue(
+            seatRef,
+            (snapshot) => {
+
+                const data =
+                    snapshot.val();
+
+
+                if (!data) {
+
+                    statusElement.textContent =
+                        "NO DATA";
+
+                    statusElement.className =
+                        "status loading";
+
+                    return;
+                }
+
+
+                const occupied =
+                    data.occupied === true;
+
+
+                // =========================================
+                // OCCUPIED
+                // =========================================
+
+                if (occupied) {
+
+                    statusElement.textContent =
+                        "OCCUPIED";
+
+                    statusElement.className =
+                        "status occupied";
+
+                    lastUpdated.textContent =
+                        "Someone is currently using this seat.";
+
+                }
+
+
+                // =========================================
+                // AVAILABLE
+                // =========================================
+
+                else {
+
+                    statusElement.textContent =
+                        "AVAILABLE";
+
+                    statusElement.className =
+                        "status available";
+
+                    lastUpdated.textContent =
+                        "Seat is currently free.";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

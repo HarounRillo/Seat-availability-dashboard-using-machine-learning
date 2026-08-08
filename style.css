@@ -1,0 +1,578 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    min-height: 100vh;
+
+    font-family: "DM Sans", sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(100, 116, 139, 0.15),
+            transparent 35%
+        ),
+        #f4f6f8;
+
+    color: #17202a;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+.dashboard {
+    width: min(100%, 1050px);
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 35px;
+}
+
+
+.eyebrow {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #7b8794;
+
+    margin-bottom: 8px;
+}
+
+
+h1 {
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: clamp(34px, 5vw, 52px);
+
+    letter-spacing: -2px;
+
+    line-height: 1.05;
+
+    margin-bottom: 10px;
+}
+
+
+.subtitle {
+    color: #7b8794;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   CONNECTION
+   ========================================================= */
+
+.connection {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    background: white;
+
+    padding: 10px 15px;
+
+    border-radius: 50px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+
+.connection-dot {
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #9aa5b1;
+}
+
+
+.connection-dot.online {
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 4px rgba(34, 197, 94, 0.12);
+}
+
+
+/* =========================================================
+   SEAT CARD
+   ========================================================= */
+
+.seat-card {
+    background: white;
+
+    border-radius: 28px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.08);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+.seat-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+
+    height: 250px;
+
+    border-radius: 50%;
+
+    background: #eef1f4;
+
+    right: -100px;
+
+    top: -100px;
+
+    z-index: 0;
+}
+
+
+.seat-header {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.seat-label {
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #9aa5b1;
+}
+
+
+.seat-header h2 {
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: 30px;
+
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   LIVE BADGE
+   ========================================================= */
+
+.live-badge {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    padding: 8px 12px;
+
+    border-radius: 50px;
+
+    background: #f1f5f3;
+
+    color: #52635a;
+}
+
+
+.live-badge span {
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    animation: pulse 1.8s infinite;
+}
+
+
+@keyframes pulse {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================================================
+   SEAT VISUAL
+   ========================================================= */
+
+.seat-visual {
+    position: relative;
+
+    height: 250px;
+
+    width: 250px;
+
+    margin: 20px auto 10px;
+
+    z-index: 2;
+}
+
+
+.seat-back {
+    position: absolute;
+
+    width: 130px;
+
+    height: 125px;
+
+    left: 60px;
+
+    top: 25px;
+
+    border-radius: 18px 18px 8px 8px;
+
+    background: #dfe4e8;
+
+    border: 5px solid #cbd2d8;
+
+    transform: perspective(300px)
+               rotateX(-5deg);
+}
+
+
+.seat-cushion {
+    position: absolute;
+
+    width: 170px;
+
+    height: 65px;
+
+    left: 40px;
+
+    top: 135px;
+
+    border-radius: 15px;
+
+    background: #c7cdd2;
+
+    border: 5px solid #b7bec4;
+
+    box-shadow:
+        0 10px 0 #aeb6bc;
+}
+
+
+.seat-icon {
+    text-align: center;
+
+    font-size: 28px;
+
+    line-height: 55px;
+
+    opacity: 0.35;
+}
+
+
+.seat-leg {
+    position: absolute;
+
+    width: 9px;
+
+    height: 70px;
+
+    background: #a9b1b7;
+
+    top: 198px;
+
+    border-radius: 5px;
+}
+
+
+.seat-leg.left {
+    left: 62px;
+
+    transform: rotate(5deg);
+}
+
+
+.seat-leg.right {
+    right: 62px;
+
+    transform: rotate(-5deg);
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status-section {
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    margin-top: 5px;
+}
+
+
+.status-title {
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    font-weight: 700;
+
+    color: #9aa5b1;
+
+    margin-bottom: 8px;
+}
+
+
+.status {
+    display: inline-block;
+
+    padding: 10px 22px;
+
+    border-radius: 50px;
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-weight: 700;
+
+    font-size: 18px;
+}
+
+
+.status.available {
+    background: #e9f8ef;
+
+    color: #16803c;
+}
+
+
+.status.occupied {
+    background: #fff0f0;
+
+    color: #d43838;
+}
+
+
+.status.loading {
+    background: #eef1f4;
+
+    color: #7b8794;
+}
+
+
+.updated {
+    margin-top: 10px;
+
+    font-size: 13px;
+
+    color: #8b96a1;
+}
+
+
+/* =========================================================
+   INFO GRID
+   ========================================================= */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+
+    margin-top: 18px;
+}
+
+
+.info-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.05);
+}
+
+
+.info-icon {
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #f0f2f4;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #56616b;
+}
+
+
+.info-card p {
+    font-size: 10px;
+
+    letter-spacing: 1.2px;
+
+    color: #9aa5b1;
+
+    font-weight: 700;
+
+    margin-bottom: 3px;
+}
+
+
+.info-card strong {
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 25px;
+
+    padding: 0 5px;
+
+    color: #9aa5b1;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    body {
+        padding: 25px 15px;
+    }
+
+
+    .header {
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+
+    .connection {
+        align-self: flex-start;
+    }
+
+
+    .seat-card {
+        padding: 25px 18px;
+    }
+
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    footer {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+}
